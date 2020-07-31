@@ -1,5 +1,5 @@
 {
-  "name": "pet-project",
+  "name": "pet-project-todo-app-typescript-redux",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -12,7 +12,7 @@
     "type": "git",
     "url": "git+https://github.com/LoranDeMarcus/pet-project.git"
   },
-  "keywords": "> 0.25%, not dead",
+  "keywords": ["> 0.25%, not dead"],
   "author": "",
   "license": "ISC",
   "bugs": {
