@@ -12,7 +12,9 @@
     "type": "git",
     "url": "git+https://github.com/LoranDeMarcus/pet-project.git"
   },
-  "keywords": ["> 0.25%, not dead"],
+  "keywords": [
+    "> 0.25%, not dead"
+  ],
   "author": "",
   "license": "ISC",
   "bugs": {
@@ -51,6 +53,9 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
-    "normalize.css": "^8.0.1"
+    "normalize.css": "^8.0.1",
+    "redux": "^4.0.5",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0"
   }
 }
