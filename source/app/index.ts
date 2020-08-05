@@ -2,9 +2,22 @@ import '../components/base.scss';
 import '../components/todo-app.scss';
 import { createStore } from 'redux';
 import { rootReducer } from "../components/Redux/rootReducer";
-import {addItem, removeItem, toggleItem} from "../components/Redux/actions";
+import {
+    addItem,
+    removeItem,
+    removeToggled,
+    showActive,
+    showALL, showCompleted,
+    toggleAll,
+    toggleItem
+} from "../components/Redux/actions";
 
 const $todoList = document.querySelector('.todo-app__list') as HTMLElement;
+const $toggleAll = document.querySelector('#select-all') as HTMLElement;
+const $clearCompletedButton = document.querySelector('.todo-app__clear-completed') as HTMLElement;
+const $filterAll = document.querySelector('.todo-app__filters-item_all') as HTMLElement;
+const $filterActive = document.querySelector('.todo-app__filters-item_active') as HTMLElement;
+const $filterComplete = document.querySelector('.todo-app__filters-item_complete') as HTMLElement;
 
 import View from "../components/View/View";
 const store = createStore(rootReducer);
@@ -15,7 +28,6 @@ document.addEventListener('keyup', e => {
     if (e.key === 'Enter') {
         let input = document.querySelector('.todo-app__input') as HTMLInputElement;
         const todoText = input.value.trim();
-        const itemsArray = items();
 
         if (!todoText.length) {
             return false
@@ -46,16 +58,42 @@ $todoList.addEventListener('click', e => {
     }
 });
 
+$toggleAll.addEventListener('click', e => {
+    const isChecked = ((e.target as HTMLInputElement).checked);
+    // @ts-ignore
+    store.dispatch(toggleAll(isChecked));
+});
+
+$clearCompletedButton.addEventListener('click', () => {
+    // @ts-ignore
+    store.dispatch(removeToggled());
+});
+
+$filterAll.addEventListener('click', () => {
+    const { items } = store.getState();
+    // @ts-ignore
+    store.dispatch(showALL(items));
+});
+
+$filterActive.addEventListener('click', () => {
+    const { items } = store.getState();
+    console.log(items);
+    // @ts-ignore
+    store.dispatch(showActive(items));
+});
+
+$filterComplete.addEventListener('click',() => {
+    const { items } = store.getState();
+    // @ts-ignore
+    store.dispatch(showCompleted(items));
+});
+
 store.subscribe(() => {
     const state = store.getState();
-    const { items, visibility } = state;
+    const { items } = state;
 
     view.showItems(items);
-    console.log(items);
+    view.showFooter(items);
+    view.showClearCompletedButton(items);
+    console.log(state);
 })
-
-function items() {
-    const state = store.getState();
-    const { items } = state;
-    return items;
-}

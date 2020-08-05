@@ -1,8 +1,14 @@
-import { ADD_ITEM, REMOVE_ITEM, TOGGLE_ITEM, TOGGLE_ALL, REMOVE_ALL, SET_VISIBILITY_FILTER } from './types';
+import { ADD_ITEM, REMOVE_ITEM, TOGGLE_ITEM, TOGGLE_ALL, REMOVE_TOGGLED } from './types';
 import { VisibilityFilters } from './types';
 import { combineReducers } from "redux";
 
-function itemReducer(state = [], action: { type: string; id: number; title: string; completed: boolean }) {
+type TodoType = {
+    id: number,
+    title: string,
+    completed: boolean
+}
+
+function itemReducer(state = [], action: { type: string; id: number; title: string; completed: boolean; isChecked: boolean; }) {
     switch (action.type) {
         case ADD_ITEM:
             return [...state,
@@ -19,33 +25,30 @@ function itemReducer(state = [], action: { type: string; id: number; title: stri
                 (item.id === action.id)
                     ? {...item, completed: !item.completed}
                     : item
-            )
-        default: state;
-    }
-    return state;
-}
-
-function allItemsReducer(state: any, action: { type: any; completed: boolean}) {
-    switch (action.type) {
+            );
         case TOGGLE_ALL:
-            return {...state, action }
-        case REMOVE_ALL:
-            return
-        default:
-            state;
-    }
-    return state;
-}
-
-function visibilityFilter(state = VisibilityFilters.SHOW_ALL, action: { type: any; filter: any; }) {
-    switch (action.type) {
-        case SET_VISIBILITY_FILTER:
-            return action.filter
+            return {...state, };
+        case REMOVE_TOGGLED:
+            return [...state].filter((item: any) => !item.completed);
         default: state;
     }
     return state;
 }
+
+function getVisibleItems(state = [], action: any) { // TODO: разобраться как передать в этот reducer state из itemReducer
+    switch (action.type) {
+        case VisibilityFilters.SHOW_ALL:
+            return state;
+        case VisibilityFilters.SHOW_ACTIVE:
+            return [...state].filter((item: { completed: boolean; }) => !item.completed);
+        case VisibilityFilters.SHOW_COMPLETED:
+            return [...state].filter((item: { completed: boolean; }) => !item.completed);
+        default: state;
+    }
+    return state;
+}
+
 export const rootReducer = combineReducers({
     items: itemReducer,
-    visibility: visibilityFilter
+    visibility: getVisibleItems
 })

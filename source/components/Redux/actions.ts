@@ -1,4 +1,4 @@
-import {ADD_ITEM, REMOVE_ITEM, REMOVE_ALL, TOGGLE_ITEM, TOGGLE_ALL, SET_VISIBILITY_FILTER } from './types';
+import {ADD_ITEM, REMOVE_ITEM, REMOVE_TOGGLED, TOGGLE_ITEM, TOGGLE_ALL, SET_VISIBILITY_FILTER } from './types';
 import { VisibilityFilters } from './types';
 
 export function addItem(title: string) {
@@ -16,9 +16,9 @@ export function removeItem(id: number) {
     }
 }
 
-export function removeALl() {
+export function removeToggled() {
     return {
-        type: REMOVE_ALL
+        type: REMOVE_TOGGLED
     }
 }
 
@@ -29,16 +29,30 @@ export function toggleItem(id: number) {
     }
 }
 
-export function toggleAll(completed: any) {
+export function toggleAll(isChecked: boolean) {
     return {
         type: TOGGLE_ALL,
-        completed
+        isChecked
     }
 }
 
-export function setVisibilityFilter(filter: any) {
+export function showALL(state: any) {
     return {
-        type: SET_VISIBILITY_FILTER,
-        filter
+        type: VisibilityFilters.SHOW_ALL,
+        state
+    }
+}
+
+export function showActive(state: any) {
+    return {
+        type: VisibilityFilters.SHOW_ACTIVE,
+        state
+    }
+}
+
+export function showCompleted(state: any) {
+    return {
+        type: VisibilityFilters.SHOW_COMPLETED,
+        state
     }
 }
