@@ -2,36 +2,50 @@ import '../components/base.scss';
 import '../components/todo-app.scss';
 import { createStore } from 'redux';
 import { rootReducer } from "../components/Redux/rootReducer";
-import { addItem } from "../components/Redux/actions";
+import {addItem, removeItem, toggleItem} from "../components/Redux/actions";
 import View from "../components/View/View";
 
 const store = createStore(rootReducer);
 const view = new View();
 
-document.addEventListener('keyup', function(e) {
+const btn = document.querySelector('.todo-app__title') as HTMLElement;
+
+document.addEventListener('keyup', e => {
     if (e.key === 'Enter') {
-        let input = document.querySelector('.todo-app__input') as any;
+        let input = document.querySelector('.todo-app__input') as HTMLInputElement;
 
         const todoText = input.value.trim();
-        return !todoText.length ? false : (store.dispatch(addItem(todoText)) && view.showItems(todoText));
+        // @ts-ignore
+        return !todoText.length ? false : store.dispatch(addItem(todoText));
     }
 });
 
-/* TODO: store.dispatch(addItem(todoText) или view.showItems(todoText), а может быть и сам слушатель события Enter должен быть в другом месте. Пересмотреть видос Владилена по redux */
+btn.addEventListener('click', () => {
+    // @ts-ignore
+    store.dispatch(removeItem(1));
+})
+
+store.subscribe(() => {
+    const state = store.getState();
+
+    console.log(state);
+})
+
+// @ts-ignore
 store.dispatch({ type: 'INIT_APPLICATION' });
 
 // $toggleAll.addEventListener('click', e => {
 //     todoApp.toggleAllItems((e.target as HTMLInputElement).checked);
 // });
 //
-// $todoList.addEventListener('change', (e: Event) => {
+// $todoList.addEventListener('change', e => {
 //     const $listItem = (e.target as HTMLElement).parentNode as HTMLElement;
 //     if ((e.target  as HTMLElement).classList.contains('todo-app__list-checkbox')) {
 //         todoApp.updateTodoStatus($listItem);
 //     }
 // });
 //
-// $todoList.addEventListener('click', (e: MouseEvent) => {
+// $todoList.addEventListener('click', e => {
 //     const $listItem = (e.target as HTMLElement).parentNode;
 //     if ((e.target as HTMLElement).classList.contains('todo-app__item-destroy')) {
 //         todoApp.deleteTodoItem($listItem);
@@ -42,7 +56,7 @@ store.dispatch({ type: 'INIT_APPLICATION' });
 //     todoApp.clearCompleted();
 // })
 //
-// $filterAll.addEventListener('click', (e: MouseEvent) => {
+// $filterAll.addEventListener('click', e => {
 //     todoApp.showAllItems();
 //     if (!(e.currentTarget as HTMLElement).classList.contains(filterItemSelected)) {
 //         (e.currentTarget as HTMLElement).classList.add(filterItemSelected);
@@ -51,7 +65,7 @@ store.dispatch({ type: 'INIT_APPLICATION' });
 //     }
 // });
 //
-// $filterActive.addEventListener('click', (e: MouseEvent) => {
+// $filterActive.addEventListener('click', e => {
 //     todoApp.showActiveItems();
 //     if (!(e.currentTarget as HTMLElement).classList.contains(filterItemSelected)) {
 //         (e.currentTarget as HTMLElement).classList.add(filterItemSelected);
@@ -60,7 +74,7 @@ store.dispatch({ type: 'INIT_APPLICATION' });
 //     }
 // });
 //
-// $filterComplete.addEventListener('click', (e: MouseEvent) => {
+// $filterComplete.addEventListener('click', e => {
 //     todoApp.showCompleteItems();
 //     if (!(e.currentTarget as HTMLElement).classList.contains(filterItemSelected)) {
 //         (e.currentTarget as HTMLElement).classList.add(filterItemSelected);

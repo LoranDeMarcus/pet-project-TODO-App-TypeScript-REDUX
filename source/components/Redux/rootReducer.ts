@@ -12,13 +12,17 @@ function itemReducer(state = [], action: { type: string; id: number; title: stri
                 }
             ];
         case REMOVE_ITEM:
-            return { ...state, map() {
-
-                }}
+            return state.map((item: any) =>
+                (item.id === action.id)
+                    ? {...item, completed: !item.completed}
+                    : item
+            )
         case TOGGLE_ITEM:
-            return { ...state, map() {
-
-                }}
+            return state.map((item: any) =>
+                (item.id === action.id)
+                    ? {...item, completed: !item.completed}
+                    : item
+            )
         default: state;
     }
     return state;

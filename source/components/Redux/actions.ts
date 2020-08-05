@@ -1,9 +1,11 @@
 import { CLEAR_INPUT, ADD_ITEM, REMOVE_ITEM, REMOVE_ALL, TOGGLE_ITEM, TOGGLE_ALL, SHOW_ALL, SHOW_ACTIVE, SHOW_COMPLETED  } from './types';
 
+let i = 0;
+
 export function addItem(title: string) {
     return {
         type: ADD_ITEM,
-        id: Date.now(),
+        id: i++,
         title
     }
 }
@@ -11,7 +13,7 @@ export function addItem(title: string) {
 export function removeItem(id: number) {
     return {
         type: REMOVE_ITEM,
-        id: id
+        id
     }
 }
 

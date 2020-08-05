@@ -1,6 +1,4 @@
 import ItemTemplate from "../Templates/Item-template";
-import { createStore } from "redux";
-import { rootReducer } from "../Redux/rootReducer";
 
 export default class View {
     template: ItemTemplate;
@@ -15,7 +13,6 @@ export default class View {
     store: any;
 
     constructor() {
-        this.store = createStore(rootReducer);
         this.template = new ItemTemplate();
         this.toggleAll = document.querySelector('#select-all') as HTMLElement;
         this.$todoList = document.querySelector('.todo-app__list') as HTMLElement;
@@ -26,11 +23,6 @@ export default class View {
         this.$filterComplete = this.$filtersList.querySelector('.todo-app__filters-item_complete') as HTMLElement;
         this.$clearCompletedButton = document.querySelector('.todo-app__clear-completed') as HTMLElement;
 
-        this.store.subscribe(() => {
-            const state = this.store.getState();
-
-            console.log(state);
-        })
     }
 
     showItems(items: Array<any>) {
