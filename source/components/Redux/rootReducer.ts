@@ -1,4 +1,5 @@
-import { ADD_ITEM, REMOVE_ITEM, TOGGLE_ITEM, TOGGLE_ALL, SHOW_ALL, SHOW_ACTIVE, SHOW_COMPLETED, REMOVE_ALL, CLEAR_INPUT } from './types';
+import { ADD_ITEM, REMOVE_ITEM, TOGGLE_ITEM, TOGGLE_ALL, REMOVE_ALL, SET_VISIBILITY_FILTER } from './types';
+import { VisibilityFilters } from './types';
 import { combineReducers } from "redux";
 
 function itemReducer(state = [], action: { type: string; id: number; title: string; completed: boolean }) {
@@ -12,11 +13,7 @@ function itemReducer(state = [], action: { type: string; id: number; title: stri
                 }
             ];
         case REMOVE_ITEM:
-            return state.map((item: any) =>
-                (item.id === action.id)
-                    ? {...item, completed: !item.completed}
-                    : item
-            )
+            return [...state].filter((item: any) => item.id !== action.id)
         case TOGGLE_ITEM:
             return state.map((item: any) =>
                 (item.id === action.id)
@@ -28,33 +25,27 @@ function itemReducer(state = [], action: { type: string; id: number; title: stri
     return state;
 }
 
-function interfaceReducer(state: any = null, action: { type: string }) {
+function allItemsReducer(state: any, action: { type: any; completed: boolean}) {
     switch (action.type) {
         case TOGGLE_ALL:
-            return
+            return {...state, action }
         case REMOVE_ALL:
             return
-        case SHOW_ALL:
-            return
-        case SHOW_ACTIVE:
-            return
-        case SHOW_COMPLETED:
-            return
-        default: state;
+        default:
+            state;
     }
     return state;
 }
 
-function inputReducer(state: any, action: any) {
+function visibilityFilter(state = VisibilityFilters.SHOW_ALL, action: { type: any; filter: any; }) {
     switch (action.type) {
-        case CLEAR_INPUT:
-            return state = '';
+        case SET_VISIBILITY_FILTER:
+            return action.filter
         default: state;
     }
     return state;
 }
-
 export const rootReducer = combineReducers({
     items: itemReducer,
-    visibility: interfaceReducer
+    visibility: visibilityFilter
 })

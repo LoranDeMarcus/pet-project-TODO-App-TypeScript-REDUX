@@ -1,11 +1,10 @@
-import { CLEAR_INPUT, ADD_ITEM, REMOVE_ITEM, REMOVE_ALL, TOGGLE_ITEM, TOGGLE_ALL, SHOW_ALL, SHOW_ACTIVE, SHOW_COMPLETED  } from './types';
-
-let i = 0;
+import {ADD_ITEM, REMOVE_ITEM, REMOVE_ALL, TOGGLE_ITEM, TOGGLE_ALL, SET_VISIBILITY_FILTER } from './types';
+import { VisibilityFilters } from './types';
 
 export function addItem(title: string) {
     return {
         type: ADD_ITEM,
-        id: i++,
+        id: Date.now(),
         title
     }
 }
@@ -30,26 +29,16 @@ export function toggleItem(id: number) {
     }
 }
 
-export function toggleAll() {
+export function toggleAll(completed: any) {
     return {
-        type: TOGGLE_ALL
+        type: TOGGLE_ALL,
+        completed
     }
 }
 
-export function showALL() {
+export function setVisibilityFilter(filter: any) {
     return {
-        type: SHOW_ALL
-    }
-}
-
-export function showActive() {
-    return {
-        type: SHOW_ACTIVE
-    }
-}
-
-export function showCompleted() {
-    return {
-        type: SHOW_COMPLETED
+        type: SET_VISIBILITY_FILTER,
+        filter
     }
 }
