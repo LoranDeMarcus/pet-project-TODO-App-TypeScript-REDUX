@@ -1,6 +1,7 @@
 import '../components/base.scss';
 import '../components/todo-app.scss';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import logger from 'redux-logger';
 import { rootReducer } from "../components/Redux/rootReducer";
 import {
     addItem,
@@ -20,7 +21,8 @@ const $filterActive = document.querySelector('.todo-app__filters-item_active') a
 const $filterComplete = document.querySelector('.todo-app__filters-item_complete') as HTMLElement;
 
 import View from "../components/View/View";
-const store = createStore(rootReducer);
+import {composeWithDevTools} from "redux-devtools-extension/index";
+const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(logger)));
 
 const view = new View();
 
@@ -77,7 +79,6 @@ $filterAll.addEventListener('click', () => {
 
 $filterActive.addEventListener('click', () => {
     const { items } = store.getState();
-    console.log(items);
     // @ts-ignore
     store.dispatch(showActive(items));
 });
@@ -95,5 +96,4 @@ store.subscribe(() => {
     view.showItems(items);
     view.showFooter(items);
     view.showClearCompletedButton(items);
-    console.log(state);
 })
