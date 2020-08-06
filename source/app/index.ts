@@ -1,14 +1,16 @@
 import '../components/base.scss';
 import '../components/todo-app.scss';
-import { createStore, applyMiddleware } from 'redux';
+import View from "../components/View/View";
+import { applyMiddleware, createStore } from 'redux';
 import logger from 'redux-logger';
-import { rootReducer } from "../components/Redux/rootReducer";
+import { itemReducer } from "../components/Redux/rootReducer";
 import {
     addItem,
     removeItem,
     removeToggled,
     showActive,
-    showALL, showCompleted,
+    showALL,
+    showCompleted,
     toggleAll,
     toggleItem
 } from "../components/Redux/actions";
@@ -20,11 +22,9 @@ const $filterAll = document.querySelector('.todo-app__filters-item_all') as HTML
 const $filterActive = document.querySelector('.todo-app__filters-item_active') as HTMLElement;
 const $filterComplete = document.querySelector('.todo-app__filters-item_complete') as HTMLElement;
 
-import View from "../components/View/View";
-import {composeWithDevTools} from "redux-devtools-extension/index";
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(logger)));
 
 const view = new View();
+const store = createStore(itemReducer, applyMiddleware(logger));
 
 document.addEventListener('keyup', e => {
     if (e.key === 'Enter') {
@@ -72,28 +72,24 @@ $clearCompletedButton.addEventListener('click', () => {
 });
 
 $filterAll.addEventListener('click', () => {
-    const { items } = store.getState();
     // @ts-ignore
-    store.dispatch(showALL(items));
+    store.dispatch(showALL());
 });
 
 $filterActive.addEventListener('click', () => {
-    const { items } = store.getState();
     // @ts-ignore
-    store.dispatch(showActive(items));
+    store.dispatch(showActive());
 });
 
 $filterComplete.addEventListener('click',() => {
-    const { items } = store.getState();
     // @ts-ignore
-    store.dispatch(showCompleted(items));
+    store.dispatch(showCompleted());
 });
 
 store.subscribe(() => {
     const state = store.getState();
-    const { items } = state;
 
-    view.showItems(items);
-    view.showFooter(items);
-    view.showClearCompletedButton(items);
+    view.showItems(state);
+    view.showFooter(state);
+    view.showClearCompletedButton(state);
 })

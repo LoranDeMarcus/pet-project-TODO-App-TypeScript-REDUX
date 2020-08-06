@@ -1,14 +1,7 @@
 import { ADD_ITEM, REMOVE_ITEM, TOGGLE_ITEM, TOGGLE_ALL, REMOVE_TOGGLED } from './types';
 import { VisibilityFilters } from './types';
-import { combineReducers } from "redux";
 
-type TodoType = {
-    id: number,
-    title: string,
-    completed: boolean
-}
-
-function itemReducer(state = [], action: { type: string; id: number; title: string; completed: boolean; isChecked: boolean; }) {
+export function itemReducer(state: Array<any> = [], action: { type: string; id: number; title: string; isChecked: boolean; }) {
     switch (action.type) {
         case ADD_ITEM:
             return [...state,
@@ -19,24 +12,17 @@ function itemReducer(state = [], action: { type: string; id: number; title: stri
                 }
             ];
         case REMOVE_ITEM:
-            return [...state].filter((item: any) => item.id !== action.id)
+            return state.filter((item: { id: number; }) => item.id !== action.id)
         case TOGGLE_ITEM:
-            return state.map((item: any) =>
+            return state.map((item: {  id: number; completed: boolean; }) =>
                 (item.id === action.id)
                     ? {...item, completed: !item.completed}
                     : item
             );
         case TOGGLE_ALL:
-            return {...state, };
+            return state.map((item: { completed: boolean; }) => item.completed = action.isChecked);
         case REMOVE_TOGGLED:
-            return [...state].filter((item: any) => !item.completed);
-        default: state;
-    }
-    return state;
-}
-
-function getVisibleItems(state = [], action: any) { // TODO: разобраться как передать в этот reducer state из itemReducer
-    switch (action.type) {
+            return [...state].filter((item: { completed: boolean; }) => !item.completed);
         case VisibilityFilters.SHOW_ALL:
             return state;
         case VisibilityFilters.SHOW_ACTIVE:
@@ -47,8 +33,3 @@ function getVisibleItems(state = [], action: any) { // TODO: разобрать�
     }
     return state;
 }
-
-export const rootReducer = combineReducers({
-    items: itemReducer,
-    visibility: getVisibleItems
-})
