@@ -42,7 +42,7 @@ function getVisibleItems(state = [], action: any) { // TODO: разобрать�
         case VisibilityFilters.SHOW_ACTIVE:
             return [...state].filter((item: { completed: boolean; }) => !item.completed);
         case VisibilityFilters.SHOW_COMPLETED:
-            return [...state].filter((item: { completed: boolean; }) => !item.completed);
+            return [...state].filter((item: { completed: boolean; }) => item.completed);
         default: state;
     }
     return state;
