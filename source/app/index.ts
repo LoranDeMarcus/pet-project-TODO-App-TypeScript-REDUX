@@ -22,7 +22,6 @@ const $filterAll = document.querySelector('.todo-app__filters-item_all') as HTML
 const $filterActive = document.querySelector('.todo-app__filters-item_active') as HTMLElement;
 const $filterComplete = document.querySelector('.todo-app__filters-item_complete') as HTMLElement;
 
-
 const view = new View();
 const store = createStore(itemReducer, applyMiddleware(logger));
 

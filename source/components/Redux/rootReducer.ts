@@ -20,16 +20,15 @@ export function itemReducer(state: Array<any> = [], action: { type: string; id: 
                     : item
             );
         case TOGGLE_ALL:
-            return state.map((item: { completed: boolean; }) => item.completed = action.isChecked);
+            return state.map((item: { completed: boolean; }) => ({...item, completed: action.isChecked}));
         case REMOVE_TOGGLED:
-            return [...state].filter((item: { completed: boolean; }) => !item.completed);
+            return state.filter((item: { completed: boolean; }) => !item.completed);
         case VisibilityFilters.SHOW_ALL:
             return state;
         case VisibilityFilters.SHOW_ACTIVE:
-            return [...state].filter((item: { completed: boolean; }) => !item.completed);
+            return state.filter((item: { completed: boolean; }) => !item.completed);
         case VisibilityFilters.SHOW_COMPLETED:
-            return [...state].filter((item: { completed: boolean; }) => item.completed);
-        default: state;
+            return state.filter((item: { completed: boolean; }) => item.completed);
+        default: return state;
     }
-    return state;
 }

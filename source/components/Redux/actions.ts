@@ -1,4 +1,4 @@
-import {ADD_ITEM, REMOVE_ITEM, REMOVE_TOGGLED, TOGGLE_ITEM, TOGGLE_ALL } from './types';
+import { ADD_ITEM, REMOVE_ITEM, REMOVE_TOGGLED, TOGGLE_ITEM, TOGGLE_ALL } from './types';
 import { VisibilityFilters } from './types';
 
 export function addItem(title: string) {
