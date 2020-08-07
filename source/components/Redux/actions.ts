@@ -1,4 +1,4 @@
-import { ADD_ITEM, REMOVE_ITEM, REMOVE_TOGGLED, TOGGLE_ITEM, TOGGLE_ALL, SHOW_ALL, SHOW_ACTIVE, SHOW_COMPLETED } from './types';
+import {ADD_ITEM, REMOVE_ITEM, REMOVE_TOGGLED, TOGGLE_ITEM, TOGGLE_ALL, SET_FILTER, StatusType } from './types';
 
 export function addItem(title: string) {
     return {
@@ -35,20 +35,9 @@ export function toggleAll(isChecked: boolean) {
     }
 }
 
-export function showALL() {
+export function setFilter(status: StatusType) {
     return {
-        type: SHOW_ALL
-    }
-}
-
-export function showActive() {
-    return {
-        type:SHOW_ACTIVE
-    }
-}
-
-export function showCompleted() {
-    return {
-        type: SHOW_COMPLETED
+        type: SET_FILTER,
+        status
     }
 }

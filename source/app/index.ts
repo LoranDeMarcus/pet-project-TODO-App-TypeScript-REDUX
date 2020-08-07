@@ -8,19 +8,15 @@ import {
     addItem,
     removeItem,
     removeToggled,
-    showActive,
-    showALL,
-    showCompleted,
+    setFilter,
     toggleAll,
     toggleItem
-} from "../components/Redux/actions";
+} from '../components/Redux/actions';
 
 const $todoList = document.querySelector('.todo-app__list') as HTMLElement;
 const $toggleAll = document.querySelector('#select-all') as HTMLElement;
 const $clearCompletedButton = document.querySelector('.todo-app__clear-completed') as HTMLElement;
-const $filterAll = document.querySelector('.todo-app__filters-item_all') as HTMLElement;
-const $filterActive = document.querySelector('.todo-app__filters-item_active') as HTMLElement;
-const $filterComplete = document.querySelector('.todo-app__filters-item_complete') as HTMLElement;
+const $filterList = document.querySelector('.todo-app__filters-list') as HTMLElement;
 
 const view = new View();
 const store = createStore(itemReducer, applyMiddleware(logger));
@@ -33,7 +29,6 @@ document.addEventListener('keyup', e => {
         if (!todoText.length) {
             return false
         }
-        // @ts-ignore
         store.dispatch(addItem(todoText));
         input.value = '';
     }
@@ -42,9 +37,7 @@ document.addEventListener('keyup', e => {
 $todoList.addEventListener('change', e => {
     const $listItem = (e.target as HTMLElement).parentNode as HTMLElement;
     const id = Number($listItem.dataset.id);
-    console.log(id);
     if ((e.target as HTMLElement).classList.contains('todo-app__list-checkbox')) {
-        // @ts-ignore
         store.dispatch(toggleItem(id));
     }
 });
@@ -52,41 +45,29 @@ $todoList.addEventListener('change', e => {
 $todoList.addEventListener('click', e => {
     const $listItem = (e.target as HTMLElement).parentNode as HTMLElement;
     const id = Number($listItem.dataset.id);
-    console.log(id);
     if ((e.target as HTMLElement).classList.contains('todo-app__item-destroy')) {
-        // @ts-ignore
         store.dispatch(removeItem(id));
     }
 });
 
 $toggleAll.addEventListener('click', e => {
     const isChecked = ((e.target as HTMLInputElement).checked);
-    // @ts-ignore
     store.dispatch(toggleAll(isChecked));
 });
 
 $clearCompletedButton.addEventListener('click', () => {
-    // @ts-ignore
     store.dispatch(removeToggled());
 });
 
-$filterAll.addEventListener('click', () => {
-    // @ts-ignore
-    store.dispatch(showALL());
-});
-
-$filterActive.addEventListener('click', () => {
-    // @ts-ignore
-    store.dispatch(showActive());
-});
-
-$filterComplete.addEventListener('click',() => {
-    // @ts-ignore
-    store.dispatch(showCompleted());
+$filterList.addEventListener('click', (e: any) => {
+    if ((e.target as HTMLElement).classList.contains('todo-app__filters-item')) {
+        const status: any = String(e.target.dataset.status);
+        store.dispatch(setFilter(status));
+    }
 });
 
 store.subscribe(() => {
-    const state = store.getState();
+    const state: any = store.getState();
 
     view.showItems(state);
     view.showActiveCount(state);
