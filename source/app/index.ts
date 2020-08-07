@@ -1,9 +1,9 @@
 import '../components/base.scss';
 import '../components/todo-app.scss';
-import View from "../components/View/View";
+import View from '../components/View/View';
 import { applyMiddleware, createStore } from 'redux';
 import logger from 'redux-logger';
-import { itemReducer } from "../components/Redux/rootReducer";
+import { itemReducer } from '../components/Redux/rootReducer';
 import {
     addItem,
     removeItem,

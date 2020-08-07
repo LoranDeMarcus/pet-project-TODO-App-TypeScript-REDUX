@@ -1,5 +1,4 @@
-import { ADD_ITEM, REMOVE_ITEM, TOGGLE_ITEM, TOGGLE_ALL, REMOVE_TOGGLED } from './types';
-import { VisibilityFilters } from './types';
+import { ADD_ITEM, REMOVE_ITEM, TOGGLE_ITEM, TOGGLE_ALL, REMOVE_TOGGLED, SHOW_ALL, SHOW_ACTIVE, SHOW_COMPLETED } from './types';
 
 export function itemReducer(state: Array<any> = [], action: { type: string; id: number; title: string; isChecked: boolean; }) {
     switch (action.type) {
@@ -23,11 +22,11 @@ export function itemReducer(state: Array<any> = [], action: { type: string; id: 
             return state.map((item: { completed: boolean; }) => ({...item, completed: action.isChecked}));
         case REMOVE_TOGGLED:
             return state.filter((item: { completed: boolean; }) => !item.completed);
-        case VisibilityFilters.SHOW_ALL:
+        case SHOW_ALL:
             return state;
-        case VisibilityFilters.SHOW_ACTIVE:
+        case SHOW_ACTIVE:
             return state.filter((item: { completed: boolean; }) => !item.completed);
-        case VisibilityFilters.SHOW_COMPLETED:
+        case SHOW_COMPLETED:
             return state.filter((item: { completed: boolean; }) => item.completed);
         default: return state;
     }
