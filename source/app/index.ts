@@ -89,6 +89,7 @@ store.subscribe(() => {
     const state = store.getState();
 
     view.showItems(state);
+    view.showActiveCount(state);
     view.showFooter(state);
     view.showClearCompletedButton(state);
 })
