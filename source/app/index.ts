@@ -1,5 +1,6 @@
 import '../components/base.scss';
 import '../components/todo-app.scss';
+import { Storage } from '../components/Storage/Storage';
 import View from '../components/View/View';
 import { applyMiddleware, createStore } from 'redux';
 import logger from 'redux-logger';
@@ -13,11 +14,13 @@ import {
     toggleItem
 } from '../components/Redux/actions';
 
+
 const $todoList = document.querySelector('.todo-app__list') as HTMLElement;
 const $toggleAll = document.querySelector('#select-all') as HTMLElement;
 const $clearCompletedButton = document.querySelector('.todo-app__clear-completed') as HTMLElement;
 const $filterList = document.querySelector('.todo-app__filters-list') as HTMLElement;
 
+const storage = new Storage('todolist-TS+REDUX');
 const view = new View();
 const store = createStore(itemReducer, applyMiddleware(logger));
 
@@ -70,6 +73,7 @@ store.subscribe(() => {
     const state: any = store.getState();
 
     view.showItems(state);
+    view.showToggleAllButton(state);
     view.showActiveCount(state);
     view.showFooter(state);
     view.showClearCompletedButton(state);

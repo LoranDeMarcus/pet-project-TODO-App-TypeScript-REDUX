@@ -7,10 +7,12 @@ export default class View {
     $footer: HTMLElement;
     $todoItemsLeft: HTMLElement;
     $todoFilter: HTMLElement;
+    $toggleAll: HTMLElement;
 
     constructor() {
         this.template = new ItemTemplate();
         this.$todoList = document.querySelector('.todo-app__list') as HTMLElement;
+        this.$toggleAll = document.querySelector('.todo-app__input-checkbox-label') as HTMLElement;
         this.$todoItemsLeft = document.querySelector('.todo-app__todo-count') as HTMLElement;
         this.$todoFilter = document.querySelector('.todo-app__filters-list') as HTMLElement;
         this.$clearCompletedButton = document.querySelector('.todo-app__clear-completed') as HTMLElement;
@@ -22,6 +24,13 @@ export default class View {
         this.$todoList.innerHTML = this.template.itemsList(state);
         // @ts-ignore
         this.$todoFilter.innerHTML = this.template.footerFilterList(state);
+    }
+
+    showToggleAllButton(state: any) {
+        const itemList: any = state.itemList;
+        itemList.length >= 1
+            ? this.$toggleAll.style.display = 'block'
+            : this.$toggleAll.style.display = 'none';
     }
 
     showFooter(state: any) {

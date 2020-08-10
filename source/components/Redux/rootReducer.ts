@@ -1,4 +1,7 @@
 import { ADD_ITEM, REMOVE_ITEM, TOGGLE_ITEM, TOGGLE_ALL, REMOVE_TOGGLED, SET_FILTER, StatusType } from './types';
+import { Storage } from '../Storage/Storage';
+
+const storage = new Storage('todolist-TS+REDUX');
 
 type initialObjectType = {
     itemList: Array<any>,
@@ -28,7 +31,8 @@ const initialObject: initialObjectType = {
 export function itemReducer(state: any = initialObject, action: any) {
     switch (action.type) {
         case ADD_ITEM:
-            return {...state,
+            return {
+                ...state,
                 itemList: [
                     ...state.itemList,
                     {
@@ -36,21 +40,31 @@ export function itemReducer(state: any = initialObject, action: any) {
                         title: action.title,
                         completed: false
                     }
-            ]};
+                ]
+            };
         case REMOVE_ITEM:
             return {...state, itemList: state.itemList.filter((item: { id: number; }) => item.id !== action.id)};
         case TOGGLE_ITEM:
-            return {...state, itemList: state.itemList.map((item: {  id: number; completed: boolean; }) =>
-                (item.id === action.id)
-                    ? {...item, completed: !item.completed}
-                    : item
-            )};
+            return {
+                ...state, itemList: state.itemList.map((item: { id: number; completed: boolean; }) =>
+                    (item.id === action.id)
+                        ? {...item, completed: !item.completed}
+                        : item
+                )
+            };
         case TOGGLE_ALL:
-            return {...state, itemList: state.itemList.map((item: { completed: boolean; }) => ({...item, completed: action.isChecked}))};
+            return {
+                ...state,
+                itemList: state.itemList.map((item: { completed: boolean; }) => ({
+                    ...item,
+                    completed: action.isChecked
+                }))
+            };
         case REMOVE_TOGGLED:
             return {...state, itemList: state.itemList.filter((item: { completed: boolean; }) => !item.completed)};
         case SET_FILTER:
             return {...state, filter: action.status};
-        default: return state;
+        default:
+            return state;
     }
 }
