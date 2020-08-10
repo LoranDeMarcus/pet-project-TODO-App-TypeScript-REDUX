@@ -1,4 +1,4 @@
-import {ADD_ITEM, REMOVE_ITEM, TOGGLE_ITEM, TOGGLE_ALL, REMOVE_TOGGLED, SET_FILTER, StatusType } from './types';
+import { ADD_ITEM, REMOVE_ITEM, TOGGLE_ITEM, TOGGLE_ALL, REMOVE_TOGGLED, SET_FILTER, StatusType } from './types';
 
 type initialObjectType = {
     itemList: Array<any>,
@@ -46,7 +46,7 @@ export function itemReducer(state: any = initialObject, action: any) {
                     : item
             )};
         case TOGGLE_ALL:
-            return {...state, itemList:state.itemList.map((item: { completed: boolean; }) => ({...item, completed: action.isChecked}))};
+            return {...state, itemList: state.itemList.map((item: { completed: boolean; }) => ({...item, completed: action.isChecked}))};
         case REMOVE_TOGGLED:
             return {...state, itemList: state.itemList.filter((item: { completed: boolean; }) => !item.completed)};
         case SET_FILTER:

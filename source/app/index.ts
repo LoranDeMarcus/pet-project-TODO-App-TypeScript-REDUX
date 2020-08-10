@@ -24,7 +24,7 @@ const store = createStore(itemReducer, applyMiddleware(logger));
 document.addEventListener('keyup', e => {
     if (e.key === 'Enter') {
         let input = document.querySelector('.todo-app__input') as HTMLInputElement;
-        const todoText = input.value.trim();
+        const todoText: string = input.value.trim();
 
         if (!todoText.length) {
             return false

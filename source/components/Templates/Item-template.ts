@@ -23,6 +23,7 @@ export default class ItemTemplate {
         const selectedFilter = 'todo-app__filters-item_selected';
         const filter: StatusType = state.filter;
         const filterList: any = state.filterList;
+
         return filterList.map((filterItem: any) => {
             return `<li data-status="${filterItem.status}" class="todo-app__filters-item todo-app__filters-item_all ${filter === filterItem.status ? selectedFilter : ''}">${filterItem.label}</li>`
         }).join('');
