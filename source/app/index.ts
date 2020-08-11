@@ -4,7 +4,7 @@ import { Storage } from '../components/Storage/Storage';
 import View from '../components/View/View';
 import { applyMiddleware, createStore } from 'redux';
 import logger from 'redux-logger';
-import { itemReducer } from '../components/Redux/rootReducer';
+import {initialObject, itemReducer} from '../components/Redux/rootReducer';
 import {
     addItem,
     removeItem,
@@ -22,7 +22,7 @@ const $filterList = document.querySelector('.todo-app__filters-list') as HTMLEle
 
 const storage = new Storage('todolist-TS+REDUX');
 const view = new View();
-const store = createStore(itemReducer, applyMiddleware(logger));
+const store = createStore(itemReducer, storage.get() ?? initialObject, applyMiddleware(logger));
 
 document.addEventListener('keyup', e => {
     if (e.key === 'Enter') {
@@ -71,10 +71,16 @@ $filterList.addEventListener('click', (e: any) => {
 
 store.subscribe(() => {
     const state: any = store.getState();
+    storage.set(state);
+    render(state);
+});
 
+function render(state: any) {
     view.showItems(state);
     view.showToggleAllButton(state);
     view.showActiveCount(state);
     view.showFooter(state);
     view.showClearCompletedButton(state);
-})
+}
+
+render(store.getState());

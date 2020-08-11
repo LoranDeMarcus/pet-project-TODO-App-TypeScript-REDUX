@@ -1,7 +1,4 @@
 import { ADD_ITEM, REMOVE_ITEM, TOGGLE_ITEM, TOGGLE_ALL, REMOVE_TOGGLED, SET_FILTER, StatusType } from './types';
-import { Storage } from '../Storage/Storage';
-
-const storage = new Storage('todolist-TS+REDUX');
 
 type initialObjectType = {
     itemList: Array<any>,
@@ -9,7 +6,7 @@ type initialObjectType = {
     filterList: Array<any>
 };
 
-const initialObject: initialObjectType = {
+export const initialObject: initialObjectType = {
     itemList: [],
     filter: 'all',
     filterList: [
