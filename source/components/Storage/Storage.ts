@@ -1,24 +1,24 @@
 export class Storage {
-    getLocalStorage: () => Array<any>;
-    setLocalStorage: (items: any) => void;
+    private readonly _getLocalStorage: () => Array<any>;
+    private readonly _setLocalStorage: (items: any) => void;
 
     constructor(name: string) {
         const localStorage = window.localStorage;
 
-        this.getLocalStorage = () => {
-            return JSON.parse(localStorage.getItem(name) || '{}');
+        this._getLocalStorage = () => {
+            return JSON.parse(localStorage.getItem(name) || 'null');
         }
         //приватные и публичные методы, интерфейсы, унаследоваться от этого класса для создания классов сохранения в куки
-        this.setLocalStorage = (items: any) => {
+        this._setLocalStorage = (items: any) => {
             localStorage.setItem(name, JSON.stringify(items))
         }
     }
 
     set(state: any) {
-        this.setLocalStorage(state);
+        this._setLocalStorage(state);
     }
 
     get() {
-        return this.getLocalStorage();
+        return this._getLocalStorage();
     }
 }

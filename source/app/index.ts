@@ -20,8 +20,8 @@ const $toggleAll = document.querySelector('#select-all') as HTMLElement;
 const $clearCompletedButton = document.querySelector('.todo-app__clear-completed') as HTMLElement;
 const $filterList = document.querySelector('.todo-app__filters-list') as HTMLElement;
 
-const storage = new Storage('todolist-TS+REDUX');
 const view = new View();
+const storage = new Storage('todolist-TS+REDUX');
 const store = createStore(itemReducer, storage.get() ?? initialObject, applyMiddleware(logger));
 
 document.addEventListener('keyup', e => {
