@@ -54,6 +54,7 @@
   },
   "dependencies": {
     "@types/redux-logger": "^3.0.8",
+    "firebase": "^7.17.2",
     "normalize.css": "^8.0.1",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",

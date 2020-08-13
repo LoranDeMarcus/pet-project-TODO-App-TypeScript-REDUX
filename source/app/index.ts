@@ -4,7 +4,7 @@ import { Storage } from '../components/Storage/Storage';
 import View from '../components/View/View';
 import { applyMiddleware, createStore } from 'redux';
 import logger from 'redux-logger';
-import {initialObject, itemReducer} from '../components/Redux/rootReducer';
+import { initialObject, itemReducer } from '../components/Redux/rootReducer';
 import {
     addItem,
     removeItem,
@@ -14,6 +14,24 @@ import {
     toggleItem
 } from '../components/Redux/actions';
 
+import * as firebase from 'firebase/app';
+import 'firebase/database';
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyAAlkOF3UOcqQqRrYe_plxHv3Jx5w12dlU",
+    authDomain: "todo-app-ts-redux.firebaseapp.com",
+    databaseURL: "https://todo-app-ts-redux.firebaseio.com",
+    projectId: "todo-app-ts-redux",
+    storageBucket: "todo-app-ts-redux.appspot.com",
+    messagingSenderId: "447138722361",
+    appId: "1:447138722361:web:d0e5a3c3ea3463c3d793e8"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+const database = firebase.database();
+console.log(database);
 
 const $todoList = document.querySelector('.todo-app__list') as HTMLElement;
 const $toggleAll = document.querySelector('#select-all') as HTMLElement;

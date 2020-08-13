@@ -8,7 +8,7 @@ export class Storage {
         this._getLocalStorage = () => {
             return JSON.parse(localStorage.getItem(name) || 'null');
         }
-        //приватные и публичные методы, интерфейсы, унаследоваться от этого класса для создания классов сохранения в куки
+        //приватные и публичные методы (protected), интерфейсы, унаследоваться от этого класса для создания классов сохранения в куки
         this._setLocalStorage = (items: any) => {
             localStorage.setItem(name, JSON.stringify(items))
         }
