@@ -15,7 +15,7 @@ import {
 } from '../components/Redux/actions';
 
 import * as firebase from 'firebase/app';
-import 'firebase/database';
+import 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -30,8 +30,7 @@ const firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-const database = firebase.database();
-console.log(database);
+const db = firebase.firestore();
 
 const $todoList = document.querySelector('.todo-app__list') as HTMLElement;
 const $toggleAll = document.querySelector('#select-all') as HTMLElement;
@@ -94,7 +93,22 @@ store.subscribe(() => {
 });
 
 function render(state: any) {
-    view.showItems(state);
+    db.collection('todos')
+        .doc('8upt8jCXQDlLeYE5irLa')
+        .set(state)
+        .then()
+        .catch((error: any) => console.log(error));
+
+    db.collection('todos')
+        .get()
+        .then((snapshot: any) => {
+            const todos = snapshot.docs.map((doc: any) => ({
+                ...doc.data()
+            }));
+            view.showItems(todos);
+        });
+
+    //view.showItems(state);
     view.showToggleAllButton(state);
     view.showActiveCount(state);
     view.showFooter(state);

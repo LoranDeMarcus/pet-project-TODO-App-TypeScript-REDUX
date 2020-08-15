@@ -22,3 +22,5 @@ export class Storage {
         return this._getLocalStorage();
     }
 }
+
+// https://www.youtube.com/watch?v=9GvBg7pTOUY
