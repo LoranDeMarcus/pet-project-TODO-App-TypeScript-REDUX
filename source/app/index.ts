@@ -88,31 +88,27 @@ $filterList.addEventListener('click', (e: any) => {
 
 store.subscribe(() => {
     const state: any = store.getState();
-    storage.set(state);
-    render(state);
-});
-
-function render(state: any) {
     db.collection('todos')
         .doc('8upt8jCXQDlLeYE5irLa')
         .set(state)
         .then()
         .catch((error: any) => console.log(error));
+    storage.set(state);
+    render(state);
+});
 
-    db.collection('todos')
-        .get()
-        .then((snapshot: any) => {
-            const todos = snapshot.docs.map((doc: any) => ({
-                ...doc.data()
-            }));
-            view.showItems(todos);
-        });
+db.collection('todos')
+    .get()
+    .then((snapshot: any) => {
+        const state = snapshot.docs[0].data();
+        render(state);
+    });
 
-    //view.showItems(state);
+function render(state: any) {
+    view.showItems(state);
     view.showToggleAllButton(state);
     view.showActiveCount(state);
     view.showFooter(state);
     view.showClearCompletedButton(state);
 }
 
-render(store.getState());

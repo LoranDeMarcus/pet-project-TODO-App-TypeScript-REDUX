@@ -1,4 +1,4 @@
-import {ADD_ITEM, REMOVE_ITEM, REMOVE_TOGGLED, TOGGLE_ITEM, TOGGLE_ALL, SET_FILTER, StatusType } from './types';
+import { ADD_ITEM, REMOVE_ITEM, REMOVE_TOGGLED, TOGGLE_ITEM, TOGGLE_ALL, SET_FILTER, StatusType } from './types';
 
 export function addItem(title: string) {
     return {
